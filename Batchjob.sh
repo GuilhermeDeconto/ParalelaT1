@@ -5,7 +5,7 @@
 #PBS -M guilherme.deconto@acad.pucrs.br
 #PBS -r n
 #PBS -j oe
-#PBS -d /home/pp12704/atividades
+#PBS -d /home/pp12704/atividades/ParalelaT1
 ################
 echo Running on host 'hostname'
 echo

@@ -3,8 +3,8 @@
 #include <math.h>
 #include <omp.h> 
 
-# define NPOINTS 2000
-# define MAXITER 2000
+# define NPOINTS 8000
+# define MAXITER 8000
 
 
 struct complex{
@@ -13,6 +13,7 @@ struct complex{
 };
 
 int main(){
+  int i,j,iter = 0;
   int numoutside = 0;
   double area, error, ztemp;
   double start, finish;
@@ -27,13 +28,13 @@ int main(){
  */
 
   start = omp_get_wtime();  
-  
-  for (int i=0; i<NPOINTS; i++) {
-    for (int j=0; j<NPOINTS; j++) {
+#pragma omp parallel for default(shared) private(i,j,c,z,ztemp,iter) reduction(+:numoutside) collapse(2)
+  for (i=0; i<NPOINTS; i++) {
+    for (j=0; j<NPOINTS; j++) {
       c.real = -2.0+2.5*(double)(i)/(double)(NPOINTS)+1.0e-7;
       c.imag = 1.125*(double)(j)/(double)(NPOINTS)+1.0e-7;
       z=c;
-      for (int iter=0; iter<MAXITER; iter++){
+      for (iter=0; iter<MAXITER; iter++){
 	ztemp=(z.real*z.real)-(z.imag*z.imag)+c.real;
 	z.imag=z.real*z.imag*2+c.imag; 
 	z.real=ztemp; 
