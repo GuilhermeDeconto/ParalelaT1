@@ -33,7 +33,7 @@ int main(){
         //        for (a = 0; a<=4;a++){   teste de repetiçoes
         int numoutside = 0;
         start = omp_get_wtime();
-#pragma omp parallel for default(shared) private(i,j,c,z,ztemp,iter) reduction(+:numoutside)
+#pragma omp parallel for default(shared) private(i,j,c,z,ztemp,iter) reduction(+:numoutside) collapse(2)
         for (i=0; i<NPOINTS; i++) {
             for (j=0; j<NPOINTS; j++) {
                 c.real = -2.0+2.5*(double)(i)/(double)(NPOINTS)+1.0e-7;
